@@ -80,6 +80,7 @@ router.put(
       .not()
       .isEmpty(),
     check("generoId", "Debe proporcionar un Genero").not().isEmpty(),
+    check("titulo").custom(esPeliculaExistente),
     validarCampos,
   ],
   putPelicula
