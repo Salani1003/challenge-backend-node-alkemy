@@ -1,11 +1,6 @@
 const {Router} = require("express");
 const {check} = require("express-validator");
-const {
-  getUsuario,
-  postUsuario,
-  putUsuario,
-  deleteUsuario,
-} = require("../controllers/usuario");
+const {postUsuario} = require("../controllers/usuario");
 const {esEmailExistente} = require("../helpers/db-validators");
 const {validarCampos} = require("../middlewares/validar-campos");
 

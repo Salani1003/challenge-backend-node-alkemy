@@ -1,6 +1,7 @@
 const {response, request} = require("express");
 const bcryptjs = require("bcryptjs");
 const Usuario = require("../models/usuario");
+const {transporter} = require("../services/mailer");
 
 const getUsuario = async (req = request, res = response) => {
   res.json({
@@ -16,6 +17,13 @@ const postUsuario = async (req = request, res = response) => {
     const salt = bcryptjs.genSaltSync();
     usuario.password = bcryptjs.hashSync(password, salt);
     await usuario.save();
+
+    await transporter.sendMail({
+      from: process.env.CORREO_USER, // sender address
+      to: email, // list of receivers
+      subject: "Registro en app challenger", // Subject line
+      html: ` <h1>Felicidades ${nombre} tu usuario fue creado con exito!!!</h1>`,
+    });
     res.json({
       msg: "Usuario Creado con exito!",
       usuario,
